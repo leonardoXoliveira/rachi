@@ -3,12 +3,14 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { Drawer } from './drawer';
 import { LogoSvgComponent } from './icons/logo';
-import { Nav } from './nav';
+import { NavDesktop } from './nav';
+import { Container } from './ui';
 
 const styles = stylex.create({
   header: {
-    height: '70px',
-    paddingHorizontal: '24px',
+    height: 79,
+  },
+  wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -20,9 +22,11 @@ export function Header() {
 
   return (
     <header {...stylex.props(styles.header)}>
-      <LogoSvgComponent />
+      <Container styles={styles.wrapper}>
+        <LogoSvgComponent />
 
-      {matches ? <Nav /> : <Drawer />}
+        {matches ? <NavDesktop /> : <Drawer />}
+      </Container>
     </header>
   );
 }

@@ -2,7 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 export const colors = stylex.defineVars({
   // Brand Colors
-  brandColor: '#0F9AFE',
+  primary: '#EFF8FF',
+  brand: '#0F9AFE',
 
   // Dark Scale
   dark10: '#293145',

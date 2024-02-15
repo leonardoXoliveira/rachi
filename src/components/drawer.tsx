@@ -1,19 +1,19 @@
 import * as stylex from '@stylexjs/stylex';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
-import { useState } from 'react';
+import { useReducer } from 'react';
 
 import { IconButton } from '../components/ui';
 import { CloseSvgComponent } from './icons/close';
 import { HamburgerSvgComponent } from './icons/hamburger';
-import { Nav } from './nav';
+import { NavMobile } from './nav';
 import { colors } from './theme/tokens.stylex';
 
 const styles = stylex.create({
   aside: {
     width: '100%',
     height: '100vh',
-    maxWidth: '360px',
-    padding: '16px',
+    maxWidth: 360,
+    padding: 16,
     position: 'fixed',
     top: 0,
     right: 0,
@@ -34,15 +34,11 @@ const styles = stylex.create({
 });
 
 export function Drawer() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
-  function handleDrawer() {
-    setIsDrawerOpen(!isDrawerOpen);
-  }
+  const [isDrawerOpen, toggle] = useReducer((state) => !state, false);
 
   return (
     <>
-      <IconButton onClick={handleDrawer}>
+      <IconButton onClick={toggle}>
         <HamburgerSvgComponent />
       </IconButton>
 
@@ -54,22 +50,21 @@ export function Drawer() {
         }}
       >
         <motion.aside
-          {...stylex.props(styles.aside)}
           initial={{ x: '100%' }}
-          animate={{ x: isDrawerOpen ? '0' : '100%' }}
+          animate={{ x: isDrawerOpen ? 0 : '100%' }}
+          {...stylex.props(styles.aside)}
         >
-          <IconButton onClick={handleDrawer} stylexs={styles.closeButton}>
+          <IconButton onClick={toggle} stylexs={styles.closeButton}>
             <CloseSvgComponent />
           </IconButton>
 
-          <Nav />
+          <NavMobile />
         </motion.aside>
 
         <AnimatePresence>
           {isDrawerOpen && (
             <motion.div
-              onClick={handleDrawer}
-              {...stylex.props(styles.backdrop)}
+              onClick={toggle}
               initial={{
                 opacity: 0,
               }}
@@ -79,6 +74,7 @@ export function Drawer() {
               exit={{
                 opacity: 0,
               }}
+              {...stylex.props(styles.backdrop)}
             ></motion.div>
           )}
         </AnimatePresence>
