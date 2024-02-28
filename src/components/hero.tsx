@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import { motion, MotionConfig } from 'framer-motion';
 import Balancer from 'react-wrap-balancer';
 
 import HeroPng from '../assets/hero.png';
@@ -48,33 +49,57 @@ const styles = stylex.create({
   },
 });
 
+const variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, x: 0 },
+  fromLeft: { x: -40 },
+  fromRight: { x: 40 },
+};
+
 export function Hero() {
   return (
     <section {...stylex.props(styles.section)}>
       <Container styles={styles.container}>
-        <div {...stylex.props(styles.wrapper)}>
-          <h1 {...stylex.props(styles.title)}>
-            <Balancer>
-              Rachi, <br /> é tudo o que você <br /> precisa em um só lugar.
-            </Balancer>
-          </h1>
-          <RoundedButton stylexs={styles.button}>Cadastrar-se</RoundedButton>
-        </div>
+        <MotionConfig
+          transition={{
+            type: 'spring',
+            stiffness: 50,
+            delay: 0.25,
+          }}
+        >
+          <motion.div
+            {...stylex.props(styles.wrapper)}
+            variants={variants}
+            initial={['hidden', 'fromLeft']}
+            animate="visible"
+          >
+            <h1 {...stylex.props(styles.title)}>
+              <Balancer>
+                Rachi, <br /> é tudo o que você <br /> precisa em um só lugar.
+              </Balancer>
+            </h1>
+            <RoundedButton stylexs={styles.button}>Cadastrar-se</RoundedButton>
+          </motion.div>
 
-        <picture>
-          <source
-            type="image/webp"
-            media="(max-width: 640px)"
-            srcSet={HeroSmallWebp}
-          />
-          <source type="image/webp" srcSet={HeroWebp} />
-          <img
-            srcSet={`${HeroSmallPng} 210w, ${HeroPng}`}
-            sizes="(max-width: 640px) 210px, 500px"
-            alt="Menino de touca e blusa sentado em uma grande pedra usando o Notebook"
-            {...stylex.props(styles.image)}
-          />
-        </picture>
+          <motion.picture
+            variants={variants}
+            initial={['hidden', 'fromRight']}
+            animate="visible"
+          >
+            <source
+              type="image/webp"
+              media="(max-width: 640px)"
+              srcSet={HeroSmallWebp}
+            />
+            <source type="image/webp" srcSet={HeroWebp} />
+            <img
+              srcSet={`${HeroSmallPng} 210w, ${HeroPng}`}
+              sizes="(max-width: 640px) 210px, 500px"
+              alt="Menino de touca e blusa sentado em uma grande pedra usando o Notebook"
+              {...stylex.props(styles.image)}
+            />
+          </motion.picture>
+        </MotionConfig>
       </Container>
     </section>
   );

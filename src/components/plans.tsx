@@ -1,4 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import { useLayoutEffect, useRef } from 'react';
 import Balancer from 'react-wrap-balancer';
 
 import { PLANS } from '../constants/plans';
@@ -38,7 +40,26 @@ const styles = stylex.create({
   },
 });
 
+const variants = {
+  initial: {
+    scale: 0.7,
+  },
+  toGrow: {
+    scale: 1,
+  },
+};
+
 export function Plans() {
+  const ref = useRef(null);
+  const controls = useAnimation();
+  const isInView = useInView(ref, { once: true });
+
+  useLayoutEffect(() => {
+    if (isInView) {
+      controls.start('toGrow');
+    }
+  });
+
   return (
     <section id={SECTIONS.PLANS} {...stylex.props(styles.section)}>
       <Container>
@@ -50,22 +71,30 @@ export function Plans() {
           </Balancer>
         </p>
 
-        <div {...stylex.props(styles.wrapper)}>
+        <div ref={ref} {...stylex.props(styles.wrapper)}>
           {PLANS.map(({ title, isPreferred, price, description }, index) => {
             return (
-              <CardPlans.Root key={index} isPreferred={isPreferred}>
-                <CardPlans.Title title={title} isPreferred={isPreferred} />
-                <CardPlans.Flag isPreferred={isPreferred} />
-                <CardPlans.Price price={price} isPreferred={isPreferred} />
-                <CardPlans.Description
-                  text={description}
-                  isPreferred={isPreferred}
-                />
+              <motion.div
+                key={index}
+                variants={variants}
+                initial="initial"
+                animate={controls}
+                transition={{ type: 'spring', stiffness: 160 }}
+              >
+                <CardPlans.Root isPreferred={isPreferred}>
+                  <CardPlans.Title title={title} isPreferred={isPreferred} />
+                  <CardPlans.Flag isPreferred={isPreferred} />
+                  <CardPlans.Price price={price} isPreferred={isPreferred} />
+                  <CardPlans.Description
+                    text={description}
+                    isPreferred={isPreferred}
+                  />
 
-                <RoundedButton stylexs={styles.signButton}>
-                  Assinar
-                </RoundedButton>
-              </CardPlans.Root>
+                  <RoundedButton stylexs={styles.signButton}>
+                    Assinar
+                  </RoundedButton>
+                </CardPlans.Root>
+              </motion.div>
             );
           })}
         </div>
