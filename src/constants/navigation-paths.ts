@@ -1,18 +1,20 @@
+import { SECTIONS } from './sections';
+
 export const NAVIGATION_PATHS = [
   {
     title: 'Funcionalidades',
-    href: '#features',
+    href: `#${SECTIONS.FEATURES}`,
   },
   {
     title: 'App',
-    href: '#app',
+    href: `#${SECTIONS.DOWNLOAD}`,
   },
   {
     title: 'Planos',
-    href: '#plans',
+    href: `#${SECTIONS.PLANS}`,
   },
   {
     title: 'Contato',
-    href: '#contact',
+    href: `#${SECTIONS.CONTACT}`,
   },
 ];

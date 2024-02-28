@@ -1,12 +1,13 @@
 import { StyleXStyles } from '@stylexjs/stylex';
 import * as stylex from '@stylexjs/stylex';
-import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 import { colors, fonts } from '../theme/tokens.stylex';
 
 const styles = stylex.create({
   roundedButton: {
-    width: 144,
+    width: '100%',
+    maxWidth: 144,
     height: 32,
     display: 'flex',
     justifyContent: 'center',
@@ -23,14 +24,19 @@ const styles = stylex.create({
     color: colors.dark40,
 
     '@media (min-width: 640px)': {
-      width: 200,
+      width: '100%',
+      maxWidth: 216,
       height: 50,
       fontSize: '2rem',
     },
   },
+  disabled: {
+    boxShadow: 'none',
+    backgroundColor: colors.dark20,
+  },
 });
 
-interface RoundedButtonProps extends ComponentPropsWithoutRef<'button'> {
+interface RoundedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   stylexs?: StyleXStyles;
 }
 
@@ -40,7 +46,14 @@ export function RoundedButton({
   ...rest
 }: PropsWithChildren<RoundedButtonProps>) {
   return (
-    <button {...stylex.props(styles.roundedButton, stylexs)} {...rest}>
+    <button
+      {...stylex.props(
+        styles.roundedButton,
+        stylexs,
+        rest.disabled && styles.disabled,
+      )}
+      {...rest}
+    >
       {children}
     </button>
   );

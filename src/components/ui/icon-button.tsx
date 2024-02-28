@@ -1,6 +1,6 @@
 import { StyleXStyles } from '@stylexjs/stylex';
 import * as stylex from '@stylexjs/stylex';
-import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 const styles = stylex.create({
   iconButton: {
@@ -14,7 +14,7 @@ const styles = stylex.create({
   },
 });
 
-interface IconButtonProps extends ComponentPropsWithoutRef<'button'> {
+interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   stylexs?: StyleXStyles;
 }
 

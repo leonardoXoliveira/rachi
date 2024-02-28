@@ -1,8 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
-import { useReducer } from 'react';
+import { useContext } from 'react';
 
 import { IconButton } from '../components/ui';
+import { DrawerContext } from '../contexts/drawer';
 import { CloseSvgComponent } from './icons/close';
 import { HamburgerSvgComponent } from './icons/hamburger';
 import { NavMobile } from './nav';
@@ -34,7 +35,7 @@ const styles = stylex.create({
 });
 
 export function Drawer() {
-  const [isDrawerOpen, toggle] = useReducer((state) => !state, false);
+  const { isDrawerOpen, toggle } = useContext(DrawerContext);
 
   return (
     <>

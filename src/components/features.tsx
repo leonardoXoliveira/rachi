@@ -2,27 +2,15 @@ import * as stylex from '@stylexjs/stylex';
 import { Balancer } from 'react-wrap-balancer';
 
 import { FEATURES } from '../constants/features';
+import { SECTIONS } from '../constants/sections';
 import { colors, fonts } from './theme/tokens.stylex';
-import { Container } from './ui';
+import { Container, Title } from './ui';
 
 const styles = stylex.create({
   section: {
     paddingVertical: {
       default: 40,
       '@media (min-width: 768px)': 56,
-    },
-  },
-  subtitle: {
-    textAlign: 'center',
-
-    fontFamily: fonts.primary,
-    fontSize: '2.4rem',
-    fontWeight: 600,
-    lineHeight: 1.25,
-    color: colors.dark10,
-
-    '@media (min-width: 768px)': {
-      fontSize: '4rem',
     },
   },
   wrapper: {
@@ -80,11 +68,9 @@ const styles = stylex.create({
 
 export function Features() {
   return (
-    <section {...stylex.props(styles.section)}>
+    <section id={SECTIONS.FEATURES} {...stylex.props(styles.section)}>
       <Container>
-        <h2 {...stylex.props(styles.subtitle)}>
-          <Balancer>Como funciona</Balancer>
-        </h2>
+        <Title as="h2" title="Como funciona" />
 
         <div {...stylex.props(styles.wrapper)}>
           {FEATURES.map(({ icon: Icon, title, description }) => (

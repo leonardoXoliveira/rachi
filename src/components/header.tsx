@@ -1,6 +1,7 @@
 import * as stylex from '@stylexjs/stylex';
 import { useMediaQuery } from 'usehooks-ts';
 
+import { DrawerContextProvider } from '../contexts/drawer';
 import { Drawer } from './drawer';
 import { LogoSvgComponent } from './icons/logo';
 import { NavDesktop } from './nav';
@@ -25,7 +26,13 @@ export function Header() {
       <Container styles={styles.wrapper}>
         <LogoSvgComponent />
 
-        {matches ? <NavDesktop /> : <Drawer />}
+        {matches ? (
+          <NavDesktop />
+        ) : (
+          <DrawerContextProvider>
+            <Drawer />
+          </DrawerContextProvider>
+        )}
       </Container>
     </header>
   );
