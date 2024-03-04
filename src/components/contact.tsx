@@ -157,6 +157,7 @@ export function Contact() {
             <Input
               name="email"
               type="email"
+              aria-label="email"
               placeholder="Seu melhor e-mail"
               onChange={handleInputChange}
               required

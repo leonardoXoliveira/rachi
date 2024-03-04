@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { IconButton } from '../components/ui';
 import { DrawerContext } from '../contexts/drawer';
@@ -37,6 +37,23 @@ const styles = stylex.create({
 export function Drawer() {
   const { isDrawerOpen, toggle } = useContext(DrawerContext);
 
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isDrawerOpen) {
+        toggle();
+      }
+    },
+    [isDrawerOpen, toggle],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress, false);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress, false);
+    };
+  }, [handleKeyPress]);
+
   return (
     <>
       <IconButton onClick={toggle}>
@@ -50,33 +67,41 @@ export function Drawer() {
           bounce: 0.2,
         }}
       >
-        <motion.aside
-          initial={{ x: '100%' }}
-          animate={{ x: isDrawerOpen ? 0 : '100%' }}
-          {...stylex.props(styles.aside)}
-        >
-          <IconButton onClick={toggle} stylexs={styles.closeButton}>
-            <CloseSvgComponent />
-          </IconButton>
-
-          <NavMobile />
-        </motion.aside>
-
         <AnimatePresence>
           {isDrawerOpen && (
-            <motion.div
-              onClick={toggle}
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-              }}
-              {...stylex.props(styles.backdrop)}
-            ></motion.div>
+            <>
+              <motion.aside
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                {...stylex.props(styles.aside)}
+              >
+                <IconButton
+                  onClick={toggle}
+                  stylexs={styles.closeButton}
+                  data-testid="closeDrawerButton"
+                >
+                  <CloseSvgComponent />
+                </IconButton>
+
+                <NavMobile />
+              </motion.aside>
+
+              <motion.div
+                onClick={toggle}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                }}
+                {...stylex.props(styles.backdrop)}
+                data-testid="backdrop"
+              ></motion.div>
+            </>
           )}
         </AnimatePresence>
       </MotionConfig>
