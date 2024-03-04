@@ -5,6 +5,9 @@ import { colors, fonts } from '../theme/tokens.stylex';
 export const baseStyles = stylex.create({
   container: {
     display: 'flex',
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
   },
   item: {
     fontFamily: fonts.secondary,

@@ -1,4 +1,5 @@
-import './reset.css';
+// Production issue: mess priority classes between imported styles (e.g import './index.css') and stylex
+// Development environment works properly
 import './index.css';
 
 import React from 'react';

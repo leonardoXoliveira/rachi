@@ -152,7 +152,10 @@ export function Contact() {
           </p>
         </div>
 
-        <form {...stylex.props(styles.form)}>
+        <form
+          {...stylex.props(styles.form)}
+          onSubmit={(event) => event.preventDefault()}
+        >
           <div {...stylex.props(styles.inputWrapper)}>
             <Input
               name="email"
@@ -168,7 +171,11 @@ export function Contact() {
               </div>
             )}
           </div>
-
+          /* Submit button initialized enable and just disabled when form is
+          invalid causing unnecessary action on the button since the input has
+          no value and no error. The button should be disabled by default and
+          enabled when the input has a valid value but this become an issue when
+          the validation occurs on onChange and not on onSubmit */
           <RoundedButton
             type="submit"
             stylexs={styles.submitButton}

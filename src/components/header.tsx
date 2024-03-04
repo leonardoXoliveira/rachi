@@ -24,7 +24,9 @@ export function Header() {
   return (
     <header {...stylex.props(styles.header)}>
       <Container styles={styles.wrapper}>
-        <LogoSvgComponent />
+        <a href="/">
+          <LogoSvgComponent />
+        </a>
 
         {matches ? (
           <NavDesktop />
