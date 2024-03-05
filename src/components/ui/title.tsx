@@ -6,6 +6,8 @@ import { colors, fonts } from '../theme/tokens.stylex';
 
 const styles = stylex.create({
   title: {
+    margin: 0,
+
     fontFamily: fonts.primary,
     fontWeight: 600,
     fontSize: {

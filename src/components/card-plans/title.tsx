@@ -4,7 +4,7 @@ import { colors, fonts } from '../theme/tokens.stylex';
 
 const styles = stylex.create({
   title: {
-    margin: 'auto',
+    margin: '0 auto',
     marginBottom: 16,
 
     fontFamily: fonts.primary,

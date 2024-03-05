@@ -27,6 +27,8 @@ const styles = stylex.create({
     flex: 1,
   },
   title: {
+    margin: 0,
+
     textAlign: 'left',
     fontFamily: fonts.primary,
     fontWeight: 600,

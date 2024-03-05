@@ -34,6 +34,7 @@ const styles = stylex.create({
     margin: 'auto',
   },
   featureTitle: {
+    margin: 0,
     marginTop: 18,
 
     fontFamily: fonts.primary,
